@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Basic To-Do App
+        </title>
+    </head>
+    <body>
+        <h1>To-Do List</h1>
+        <ul>
+            {% for activity in to_do_list %}
+            <li>
+                <input type="checkbox" name="Status" {% if activity['Status'] %} checked {% endif %} disabled onchange="this.form.submit()">
+                <span {% if activity['Status'] %} style="text-decoration: line-through" {% endif %}>{{ activity['Activity'] }}</span>
+                <a href="{{ url_for('edit', index=loop.index0) }}">Edit</a>
+                <a href="{{ url_for('delete', index=loop.index0) }}">Delete</a>
+                <a href="{{ url_for('check', index=loop.index0) }}">Check</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('add') }}" method="POST">
+            <input type="text" name="task">
+            <button type="submit">Add activity</button>
+        </form>
+    </body>
+</html>
